@@ -191,6 +191,11 @@ Feel free to check out the issues page. If you want to add new functions to the 
 
 This project is licensed under the BSD-3-Clause License - see the [LICENSE](LICENSE) file for details.
 
+### Acknowledgments
+This software is made using **RemObjects Pascal Script**, originally created by Carlo Kok and RemObjects Software, LLC.
+The Pascal Script component is included under `vendor/PascalScript` and its original license can be found at `vendor/PascalScript/LICENSE.md`.
+More information about RemObjects Pascal Script can be found at [RemObjects Software](https://www.remobjects.com).
+
 ---
 
 <p align="center">
