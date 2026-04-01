@@ -72,6 +72,10 @@ begin
   Sender.AddMethod(FLibrary, @THeatherStdLib.GetCwd, 'function GetCwd: string;');
   Sender.AddMethod(FLibrary, @THeatherStdLib.SetCwd, 'function SetCwd(const Path: string): Boolean;');
   Sender.AddMethod(FLibrary, @THeatherStdLib.Terminate, 'procedure Terminate(ExitCode: Integer);');
+  
+  // Network Operations
+  Sender.AddMethod(FLibrary, @THeatherStdLib.DownloadFile, 'function DownloadFile(const URL, Dest: string): Boolean;');
+  Sender.AddMethod(FLibrary, @THeatherStdLib.HttpGet, 'function HttpGet(const URL: string): string;');
 end;
 
 { Loads the given script from file, compiles it, and executes it.

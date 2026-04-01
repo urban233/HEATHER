@@ -5,7 +5,7 @@ unit uHeatherLib;
 interface
 
 uses
-  Classes, SysUtils, Process{$IFDEF MSWINDOWS}, Windows{$ENDIF};
+  Classes, SysUtils, Process, fphttpclient{$IFDEF MSWINDOWS}, Windows{$ENDIF};
 
 type
   { THeatherStdLib contains all our baked-in Python-parity functions }
@@ -37,6 +37,10 @@ type
     function GetCwd: string;
     function SetCwd(const Path: string): Boolean;
     procedure Terminate(ExitCode: Integer);
+    
+    // Network Operations
+    function DownloadFile(const URL, Dest: string): Boolean;
+    function HttpGet(const URL: string): string;
   end;
 
 implementation
@@ -331,6 +335,58 @@ end;
 procedure THeatherStdLib.Terminate(ExitCode: Integer);
 begin
   Halt(ExitCode);
+end;
+
+{ Network Operations }
+
+{ Downloads a file from a URL over HTTP/HTTPS to the specified destination.
+  @param URL The URL to download from.
+  @param Dest The local path where the file should be saved.
+  @return True if successful, False otherwise. }
+function THeatherStdLib.DownloadFile(const URL, Dest: string): Boolean;
+var
+  Client: TFPHTTPClient;
+begin
+  Result := False;
+  Client := TFPHTTPClient.Create(nil);
+  try
+    try
+      // Ensure the destination directory exists
+      if not ForceDirectories(ExtractFileDir(Dest)) then Exit;
+      
+      // Download the file
+      Client.Get(URL, Dest);
+      Result := True;
+    except
+      { Suppress exceptions to return False on failure }
+    end;
+  finally
+    Client.Free;
+  end;
+end;
+
+{ Performs a GET request and returns the response body as a string.
+  @param URL The URL to request.
+  @return The response body as a string, or empty string on failure. }
+function THeatherStdLib.HttpGet(const URL: string): string;
+var
+  Client: TFPHTTPClient;
+  ResponseStream: TStringStream;
+begin
+  Result := '';
+  Client := TFPHTTPClient.Create(nil);
+  ResponseStream := TStringStream.Create('');
+  try
+    try
+      Client.Get(URL, ResponseStream);
+      Result := ResponseStream.DataString;
+    except
+      { Suppress exceptions to return empty string on failure }
+    end;
+  finally
+    ResponseStream.Free;
+    Client.Free;
+  end;
 end;
 
 end.
