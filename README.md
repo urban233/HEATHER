@@ -1,9 +1,5 @@
-heather<p align="center">
-  <img src="assets/heather-logo.png" alt="HEATHER Logo" width="250">
-</p>
-
 <p align="center">
-  <strong>A blazingly fast, cross-platform Pascal Script engine for task automation.</strong>
+  <strong>A fast, cross-platform Pascal Script engine for task automation.</strong>
 </p>
 
 <p align="center">
