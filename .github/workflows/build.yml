@@ -1,0 +1,41 @@
+name: Build heather
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install Free Pascal
+      uses: gcarreno/setup-lazarus@v3
+      with:
+        lazarus-version: 'stable'
+
+    - name: Build (Windows)
+      if: matrix.os == 'windows-latest'
+      run: |
+        .\build.bat build
+
+    - name: Build (Linux / macOS)
+      if: matrix.os != 'windows-latest'
+      run: |
+        make build
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: heather-${{ matrix.os }}
+        path: |
+          bin/heather
+          bin/heather.exe
+        if-no-files-found: error

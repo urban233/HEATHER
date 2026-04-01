@@ -1,0 +1,3 @@
+# Free pascal excludes
+bin/
+obj/
