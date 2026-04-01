@@ -44,7 +44,7 @@ Building HEATHER is incredibly straightforward. The project uses a custom compil
 Ensure you have the [Free Pascal Compiler](https://www.freepascal.org/) and [Lazarus](https://www.lazarus-ide.org/) (for the Pascal Script component) installed, then clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/HEATHER.git
+git clone https://github.com/urban233/HEATHER.git
 cd HEATHER
 ```
 
@@ -58,6 +58,21 @@ Use the included batch script to compile the project.
 *The compiled executable will be located at `bin\heather.exe`.*
 
 *(To clean your build environment, run `.\build.bat clean`).*
+
+**For macOS & Linux**
+Use the included Makefile to compile the project.
+
+```bash
+make
+```
+
+```bash
+sudo make install
+```
+
+*The compiled executable will be located at `bin\heather`.*
+
+*(To clean your build environment, run `make clean`).*
 
 ---
 
